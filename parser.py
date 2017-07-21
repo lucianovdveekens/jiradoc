@@ -34,8 +34,13 @@ def p_sub_tasks(p):
 
 
 def p_sub_task(p):
-    'sub-task : TYPE sentence'
-    p[0] = SubTask(p[1], p[2])
+    '''sub-task : TYPE sentence COLON sentence
+                | TYPE sentence'''
+    desc = ""
+    if len(p) == 5:
+        desc = p[4]
+
+    p[0] = SubTask(p[1], p[2], desc)
 
 
 # Error rule for syntax errors
@@ -50,10 +55,10 @@ parser = yacc.yacc()
 data = '''
 = ABC-1234 My story
 CODE
-* A sub-task
+* A sub-task: do something
 * Another sub-task
 FD
-* A FD sub-task
+* A FD sub-task: description for a FD task
 '''
 
 result = parser.parse(data)

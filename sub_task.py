@@ -5,9 +5,10 @@
 # ------------------------------------------------------------
 
 class SubTask:
-    def __init__(self, type, name):
+    def __init__(self, type, name, desc):
         self.type = type
         self.name = name
+        self.desc = desc
 
     def __repr__(self):
-        return self.type + ': ' + self.name
+        return 'SubTask(type=' + self.type + ',name=' + self.name + ',desc=' + self.desc + ')'

@@ -6,7 +6,7 @@
 import ply.lex as lex
 
 # List of token names.   This is always required
-tokens = ['EQUALS', 'ISSUE', 'TYPE', 'AT_SIGN', 'DOUBLE_ASTERISK', 'WORD']
+tokens = ['EQUALS', 'ISSUE', 'TYPE', 'AT_SIGN', 'COLON', 'WORD']
 
 # Regular expression rules for simple tokens
 t_EQUALS = r'='
@@ -15,7 +15,7 @@ t_ISSUE = r'\w+-\d+'
 
 t_AT_SIGN = r'@'
 
-t_DOUBLE_ASTERISK = r'\*\*'
+t_COLON = r':'
 
 t_WORD = r'[\w-]+'
 
@@ -51,7 +51,7 @@ lexer = lex.lex()
 data = '''
 = ABC-1234 My story
 CODE
-* A sub-task
+* A sub-task : Task description
 * Another sub-task
 FD
 * klfjskldafj
