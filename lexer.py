@@ -6,7 +6,7 @@
 import ply.lex as lex
 
 # List of token names.   This is always required
-tokens = ['STORY_START', 'SUBTASK_START', 'DESCRIPTION_START', 'ISSUE', 'WORD', 'TYPE']
+tokens = ['STORY_START', 'SUBTASK_START', 'DESCRIPTION_START', 'TIME_START', 'ISSUE', 'WORD', 'TYPE']
 
 # Regular expression rules for simple tokens
 t_STORY_START = r'='
@@ -14,6 +14,8 @@ t_STORY_START = r'='
 t_SUBTASK_START = r'\*'
 
 t_DESCRIPTION_START = r'\*\*'
+
+t_TIME_START = r'(?<= )-(?= )'
 
 t_ISSUE = r'\w+-\d+'
 
@@ -38,12 +40,12 @@ lexer = lex.lex()
 testdata = '''
 = ABC-1234 My story
 CODE
-* A sub-task 
+* A sub-task - 4h 
 ** Task description
-* Another sub-task
+* Another sub-task -1h
 ** Test 1 2 3
 FD
-* klfjskldafj
+* A functional design sub-task - 1h
 '''
 # Give the lexer some input
 lexer.input(testdata)

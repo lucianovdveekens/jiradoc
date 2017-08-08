@@ -48,12 +48,22 @@ def p_subtasks(p):
 
 
 def p_subtask(p):
-    '''subtask : SUBTASK_START sentence DESCRIPTION_START sentence
-               | SUBTASK_START sentence'''
+    '''subtask : SUBTASK_START sentence time description
+               | SUBTASK_START sentence time'''
     if len(p) == 5:
-        p[0] = SubTask(name=p[2], desc=p[4])
+        p[0] = SubTask(name=p[2], time=p[3], desc=p[4])
     else:
-        p[0] = SubTask(name=p[2])
+        p[0] = SubTask(name=p[2], time=p[3])
+
+
+def p_time(p):
+    '''time : TIME_START WORD'''
+    p[0] = p[2]
+
+
+def p_description(p):
+    '''description : DESCRIPTION_START sentence'''
+    p[0] = p[2]
 
 
 # Error rule for syntax errors
