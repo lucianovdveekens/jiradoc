@@ -6,36 +6,23 @@
 import ply.lex as lex
 
 # List of token names.   This is always required
-tokens = ['EQUALS', 'ISSUE', 'TYPE', 'AT_SIGN', 'COLON', 'WORD']
+tokens = ['STORY_START', 'SUBTASK_START', 'DESCRIPTION_START', 'ISSUE', 'WORD', 'TYPE']
 
 # Regular expression rules for simple tokens
-t_EQUALS = r'='
+t_STORY_START = r'='
+
+t_SUBTASK_START = r'\*'
+
+t_DESCRIPTION_START = r'\*\*'
 
 t_ISSUE = r'\w+-\d+'
 
-t_AT_SIGN = r'@'
-
-t_COLON = r':'
-
 t_WORD = r'[\w-]+'
+
+t_TYPE = r'(?<=\n)(CODE|FD|TEST|MANUAL)(?=\n)'
 
 # A string containing ignored characters (spaces, tabs and newlines)
 t_ignore = ' \t\n'
-
-current_task_type = ""
-
-
-def t_current_task_type(t):
-    r'CODE|FD|TEST|MANUAL'
-    global current_task_type
-    current_task_type = t.value
-    pass
-
-
-def t_TYPE(t):
-    r'\*'
-    t.value = current_task_type
-    return t
 
 
 # Error handling rule
@@ -48,16 +35,18 @@ def t_error(t):
 lexer = lex.lex()
 
 # Test it out
-data = '''
+testdata = '''
 = ABC-1234 My story
 CODE
-* A sub-task : Task description
+* A sub-task 
+** Task description
 * Another sub-task
+** Test 1 2 3
 FD
 * klfjskldafj
 '''
 # Give the lexer some input
-lexer.input(data)
+lexer.input(testdata)
 
 # Tokenize
 while True:

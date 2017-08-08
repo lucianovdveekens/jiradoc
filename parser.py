@@ -5,18 +5,20 @@
 # ------------------------------------------------------------
 import ply.yacc as yacc
 
+# DO NOT REMOVE! importing the tokens is required
 from lexer import tokens
+from lexer import testdata
 from story import Story
 from sub_task import SubTask
 
 
 def p_story(p):
-    'story : EQUALS ISSUE sentence sub-tasks'
+    '''story : STORY_START ISSUE sentence types-and-subtasks'''
     p[0] = Story(p[2], p[3], p[4])
 
 
 def p_sentence(p):
-    '''sentence : sentence WORD
+    '''sentence : WORD sentence
                 | WORD'''
     if (len(p) == 3):
         p[0] = p[1] + ' ' + p[2]
@@ -24,23 +26,34 @@ def p_sentence(p):
         p[0] = p[1]
 
 
-def p_sub_tasks(p):
-    '''sub-tasks : sub-tasks sub-task
-                 | sub-task'''
+def p_types_and_subtasks(p):
+    '''types-and-subtasks : TYPE subtasks types-and-subtasks
+                          | TYPE subtasks'''
+    for task in p[2]:
+        task.type = p[1]
+
+    if len(p) == 4:
+        p[0] = p[2] + p[3]
+    else:
+        p[0] = p[2]
+
+
+def p_subtasks(p):
+    '''subtasks : subtask subtasks
+                | subtask'''
     if len(p) == 2:
         p[0] = [p[1]]
     if len(p) == 3:
-        p[0] = p[1] + [p[2]]
+        p[0] = [p[1]] + p[2]
 
 
-def p_sub_task(p):
-    '''sub-task : TYPE sentence COLON sentence
-                | TYPE sentence'''
-    desc = ""
+def p_subtask(p):
+    '''subtask : SUBTASK_START sentence DESCRIPTION_START sentence
+               | SUBTASK_START sentence'''
     if len(p) == 5:
-        desc = p[4]
-
-    p[0] = SubTask(p[1], p[2], desc)
+        p[0] = SubTask(name=p[2], desc=p[4])
+    else:
+        p[0] = SubTask(name=p[2])
 
 
 # Error rule for syntax errors
@@ -52,14 +65,5 @@ def p_error(p):
 parser = yacc.yacc()
 
 # Testing
-data = '''
-= ABC-1234 My story
-CODE
-* A sub-task: do something
-* Another sub-task
-FD
-* A FD sub-task: description for a FD task
-'''
-
-result = parser.parse(data)
+result = parser.parse(testdata)
 print(result)

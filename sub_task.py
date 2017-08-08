@@ -5,7 +5,7 @@
 # ------------------------------------------------------------
 
 class SubTask:
-    def __init__(self, type, name, desc):
+    def __init__(self, name, type="", desc=""):
         self.type = type
         self.name = name
         self.desc = desc
