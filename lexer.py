@@ -6,21 +6,23 @@
 import ply.lex as lex
 
 # List of token names.   This is always required
-tokens = ['STORY_START', 'SUBTASK_START', 'DESCRIPTION_START', 'TIME_START', 'ISSUE', 'WORD', 'TYPE']
+tokens = [
+    'STORY_START',
+    'SUBTASK_START',
+    'DESCRIPTION_START',
+    'TIME_START',
+    'ISSUE',
+    'WORD',
+    'TYPE'
+]
 
 # Regular expression rules for simple tokens
 t_STORY_START = r'='
-
 t_SUBTASK_START = r'\*'
-
 t_DESCRIPTION_START = r'\*\*'
-
 t_TIME_START = r'(?<= )-(?= )'
-
 t_ISSUE = r'\w+-\d+'
-
 t_WORD = r'[\w-]+'
-
 t_TYPE = r'(?<=\n)(CODE|FD|TEST|MANUAL)(?=\n)'
 
 # A string containing ignored characters (spaces, tabs and newlines)
@@ -47,6 +49,7 @@ CODE
 FD
 * A functional design sub-task - 1h
 '''
+
 # Give the lexer some input
 lexer.input(testdata)
 
