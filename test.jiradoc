@@ -1,6 +1,8 @@
-= ABC-1234 My test story
+= ABC-1234 My story
 CODE
-* A sub-task # 1h
+* A sub-task - 4h
 ** Task description
+* Another sub-task - 1h
+** Test 1 2 3
 FD
-* Another sub-task # 1h
+* A functional design sub-task - 1h

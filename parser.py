@@ -7,7 +7,6 @@ import ply.yacc as yacc
 
 # DO NOT REMOVE! importing the tokens is required
 from lexer import tokens
-from lexer import testdata
 from story import Story
 from sub_task import SubTask
 
@@ -79,7 +78,3 @@ def p_error(p):
 
 # Build the parser
 parser = yacc.yacc()
-
-# Testing
-result = parser.parse(testdata)
-print(result)

@@ -37,25 +37,3 @@ def t_error(t):
 
 # Build the lexer
 lexer = lex.lex()
-
-# Test it out
-testdata = '''
-= ABC-1234 My story
-CODE
-* A sub-task - 4h 
-** Task description
-* Another sub-task -1h
-** Test 1 2 3
-FD
-* A functional design sub-task - 1h
-'''
-
-# Give the lexer some input
-lexer.input(testdata)
-
-# Tokenize
-while True:
-    tok = lexer.token()
-    if not tok:
-        break  # No more input
-    print(tok)
