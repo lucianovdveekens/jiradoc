@@ -2,11 +2,13 @@
 # prog.py
 #
 # The main program which expects a jiradoc formatted file to
-# be passed in as a cmdline option. It reads the file and
-# parses its content to a Story object.
+# be passed in as a cmdline option. It reads the file, parses
+# its content to a Story object and then serializes it to JSON
 # ------------------------------------------------------------
 import argparse
+import json
 
+from encoder import MyJSONEncoder
 from parser import parser
 
 argparser = argparse.ArgumentParser(description='The JIRAdoc parser')
@@ -15,6 +17,7 @@ args = argparser.parse_args()
 
 f = open(args.file)
 content = f.read()
+story = parser.parse(content)
 
-parsed = parser.parse(content)
-print parsed
+json = json.dumps(story.__dict__, cls=MyJSONEncoder, indent=4, sort_keys=True)
+print json
