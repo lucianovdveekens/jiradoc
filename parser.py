@@ -11,6 +11,15 @@ from story import Story
 from sub_task import SubTask
 
 
+def p_stories(p):
+    '''stories : story stories
+               | story'''
+    if len(p) == 3:
+        p[0] = [p[1]] + p[2]
+    else:
+        p[0] = [p[1]]
+
+
 def p_story(p):
     '''story : STORY_START ISSUE name types-and-subtasks'''
     p[0] = Story(p[2], p[3], p[4])
@@ -19,7 +28,7 @@ def p_story(p):
 def p_words(p):
     '''words : WORD words
              | WORD'''
-    if (len(p) == 3):
+    if len(p) == 3:
         p[0] = p[1] + ' ' + p[2]
     else:
         p[0] = p[1]

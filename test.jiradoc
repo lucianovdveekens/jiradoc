@@ -1,4 +1,4 @@
-= ABC-1234 My story
+= ABC-1234 The 1st story
 CODE
 * A sub-task - 4h
 ** Task description
@@ -6,3 +6,7 @@ CODE
 ** Test 1 2 3
 FD
 * A functional design sub-task - 1h
+
+= ABC-1234 The 2nd story
+TEST
+* A test task - 4h

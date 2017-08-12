@@ -17,7 +17,10 @@ args = argparser.parse_args()
 
 f = open(args.file)
 content = f.read()
-story = parser.parse(content)
+stories = parser.parse(content)
 
-json = json.dumps(story.__dict__, cls=MyJSONEncoder, indent=4, sort_keys=True)
-print json
+for story in stories:
+    print story
+
+# json = json.dumps(story.__dict__, cls=MyJSONEncoder, indent=4, sort_keys=True)
+# print json
