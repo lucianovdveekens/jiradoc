@@ -12,7 +12,7 @@ setup(
     author='Luciano van der Veekens',
     author_email='lucianovdveekens@gmail.com',
     packages=find_packages(),
-    install_requires=['argparse', 'ply'],
+    install_requires=['ply'],
     package_data={
         'jiradoc': ['data/test.jiradoc']
     },
