@@ -6,9 +6,9 @@
 import ply.yacc as yacc
 
 # DO NOT REMOVE! importing the tokens is required
-from lexer import tokens
-from story import Story
-from sub_task import SubTask
+from jiradoc.parser.lexer import tokens
+from jiradoc.jira.story import Story
+from jiradoc.jira.subtask import SubTask
 
 
 def p_stories(p):

@@ -6,19 +6,17 @@
 # its content to a Story object and then serializes it to JSON
 # ------------------------------------------------------------
 import argparse
-import json
 
-from encoder import MyJSONEncoder
-from parser import parser
+from jiradoc.parser.parser import parser
 
 argparser = argparse.ArgumentParser(description='The JIRAdoc parser')
-argparser.add_argument('-f', dest='file', default='test.jiradoc', help='The jiradoc formatted file')
+argparser.add_argument('-f', dest='file', default='jiradoc/test.jiradoc', help='The jiradoc formatted file')
 args = argparser.parse_args()
 
-f = open(args.file)
-content = f.read()
-stories = parser.parse(content)
+with open(args.file) as f:
+    content = f.read()
 
+stories = parser.parse(content)
 for story in stories:
     print story
 

@@ -1,8 +1,9 @@
 # ------------------------------------------------------------
-# sub_task.py
+# subtask.py
 #
 # A class representing a JIRA sub-task
 # ------------------------------------------------------------
+
 
 class SubTask:
     def __init__(self, name, time, type="", desc=""):
