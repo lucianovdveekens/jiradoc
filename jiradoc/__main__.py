@@ -1,27 +1,35 @@
 # ------------------------------------------------------------
 # __main__.py
 #
-# The main program which expects a jiradoc formatted file to
-# be passed in as a cmdline option. It reads the file and
-# parses its content to Story objects.
+# The main program
 # ------------------------------------------------------------
 import argparse
+import os
 import pkg_resources
+import sys
 
-from jiradoc.parser.parser import parser
+from jiradoc.parser.parser import parser as jiradoc_parser
 
 
 def main(args=None):
-    argparser = argparse.ArgumentParser(description='The JIRAdoc parser')
+    parser = argparse.ArgumentParser(description='A tool that parses a JIRAdoc formatted file and returns a list of '
+                                                 'story objects')
 
     test_file = pkg_resources.resource_filename(__name__, 'data/test.jiradoc')
-    argparser.add_argument('-f', dest='file', default=test_file, help='The jiradoc formatted file')
-    args = argparser.parse_args()
+    parser.add_argument('-f', dest='file', default=test_file,
+                        help='A .jiradoc file containing sub-tasks to JIRA stories')
+    args = parser.parse_args()
+
+    filename, ext = os.path.splitext(args.file)
+    if ext != '.jiradoc':
+        print 'Invalid file extension: ' + ext
+        print 'The only valid extension is .jiradoc'
+        sys.exit(1)
 
     with open(args.file) as f:
         content = f.read()
 
-    stories = parser.parse(content)
+    stories = jiradoc_parser.parse(content)
     for story in stories:
         print story
 
