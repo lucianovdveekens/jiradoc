@@ -21,12 +21,12 @@ t_STORY_START = r'='
 t_SUBTASK_START = r'\*'
 t_DESCRIPTION_START = r'\*\*'
 t_TIME_START = r'(?<= )-(?= )'
-t_ISSUE = r'\w+-\d+'
-t_WORD = r'[\w-]+'
-t_TYPE = r'(?<=\n)(CODE|FD|TEST|MANUAL)(?=\n)'
+t_ISSUE = r'[A-Z]+\-\d+'
+t_WORD = r'[\w\-\,"]+'
+t_TYPE = r'(?<=\n)(CODE|FD|TEST|MANUAL)(?=\r?\n)'
 
 # A string containing ignored characters (spaces, tabs and newlines)
-t_ignore = ' \t\n'
+t_ignore = ' \t\r\n'
 
 
 # Error handling rule
