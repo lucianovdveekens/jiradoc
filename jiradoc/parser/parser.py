@@ -21,22 +21,17 @@ def p_stories(p):
 
 
 def p_story(p):
-    '''story : STORY_START ISSUE name types-and-subtasks'''
+    '''story : STORY_START ISSUE sentence types-and-subtasks'''
     p[0] = Story(p[2], p[3], p[4])
 
 
-def p_words(p):
-    '''words : WORD words
-             | WORD'''
+def p_sentence(p):
+    '''sentence : WORD sentence
+                | WORD'''
     if len(p) == 3:
         p[0] = p[1] + ' ' + p[2]
     else:
         p[0] = p[1]
-
-
-def p_name(p):
-    '''name : words'''
-    p[0] = p[1]
 
 
 def p_types_and_subtasks(p):
@@ -61,8 +56,8 @@ def p_subtasks(p):
 
 
 def p_subtask(p):
-    '''subtask : SUBTASK_START name time description
-               | SUBTASK_START name time'''
+    '''subtask : SUBTASK_START sentence time description
+               | SUBTASK_START sentence time'''
     task = SubTask(name=p[2], time=p[3])
     if len(p) == 5:
         task.desc = p[4]
@@ -76,7 +71,7 @@ def p_time(p):
 
 
 def p_description(p):
-    '''description : DESCRIPTION_START words'''
+    '''description : DESCRIPTION_START sentence'''
     p[0] = p[2]
 
 
