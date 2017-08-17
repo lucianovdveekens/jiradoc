@@ -11,6 +11,19 @@ from jiradoc.jira.story import Story
 from jiradoc.jira.subtask import SubTask
 
 
+def p_sprint_and_stories(p):
+    '''sprint-and-stories : sprint stories'''
+    for story in p[2]:
+        story.sprint = p[1]
+
+    p[0] = p[2]
+
+
+def p_sprint(p):
+    '''sprint : SPRINT_START sentence'''
+    p[0] = p[2]
+
+
 def p_stories(p):
     '''stories : story stories
                | story'''

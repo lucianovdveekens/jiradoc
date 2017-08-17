@@ -7,6 +7,7 @@ import ply.lex as lex
 
 # List of token names.   This is always required
 tokens = [
+    'SPRINT_START',
     'STORY_START',
     'SUBTASK_START',
     'DESCRIPTION_START',
@@ -17,12 +18,13 @@ tokens = [
 ]
 
 # Regular expression rules for simple tokens
+t_SPRINT_START = r'\#'
 t_STORY_START = r'='
 t_SUBTASK_START = r'\*'
-t_DESCRIPTION_START = r'\*\*'
-t_TIME_START = r'(?<= )-(?= )'
-t_ISSUE = r'[A-Z]+\-\d+'
-t_WORD = r'[\w\-\,"]+'
+t_DESCRIPTION_START = r'\*{2}'
+t_TIME_START = r'@'
+t_ISSUE = r'[A-Z]{3}\-\d+'
+t_WORD = r'[!\w,\-"\.]+'
 t_TYPE = r'(?<=\n)(CODE|FD|TEST|MANUAL)(?=\r?\n)'
 
 # A string containing ignored characters (spaces, tabs and newlines)
@@ -37,3 +39,14 @@ def t_error(t):
 
 # Build the lexer
 lexer = lex.lex()
+
+# # Testing
+# # Give the lexer some input
+# lexer.input(open('jiradoc/data/test.jiradoc').read())
+#
+# # Tokenize
+# while True:
+#     tok = lexer.token()
+#     if not tok:
+#         break  # No more input
+#     print(tok)

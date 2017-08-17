@@ -4,11 +4,19 @@ This repository serves as a small library to parse a _.jiradoc_ file and extract
 
 _An example format:_
 ```
-= ABC-1234 Example story
+# Sprint 3
+
+= ABC-1234 The 1st story
 CODE
-* A sub-task - 8h
-** its description  
+* A sub-task @ 4h
+** Task description!
+* Another sub-task @ 1h
+** Do "something"
 FD
-* Another sub-task - 4h
+* A functional design sub-task @ 1h
+
+= ABC-1234 The 2nd story
+TEST
+* A test task @ 4h
 ```
 TODO 

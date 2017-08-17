@@ -1,13 +1,14 @@
+# Sprint 3
+
 = ABC-1234 The 1st story
 CODE
-* A sub-task - 4h
-** Task description, containing commas, and even more
-* Another sub-task - 1h
-** Testing double quotes "1 2 3"
+* A sub-task @ 4h
+** Task description!
+* Another sub-task @ 1h
+** Do "something"
 FD
-* A functional design sub-task - 1h
-** "Testing double quotes"
+* A functional design sub-task @ 1h
 
 = ABC-1234 The 2nd story
 TEST
-* A test task - 4h
+* A test task @ 4h

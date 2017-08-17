@@ -32,6 +32,7 @@ def main(args=None):
     stories = jiradoc_parser.parse(content)
     for story in stories:
         print story
+        print
 
 
 if __name__ == "__main__":
