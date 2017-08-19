@@ -7,7 +7,6 @@ import ply.lex as lex
 
 # List of token names.   This is always required
 tokens = [
-    'SPRINT_START',
     'STORY_START',
     'SUBTASK_START',
     'DESCRIPTION_START',
@@ -18,12 +17,11 @@ tokens = [
 ]
 
 # Regular expression rules for simple tokens
-t_SPRINT_START = r'\#'
 t_STORY_START = r'='
 t_SUBTASK_START = r'\*'
 t_DESCRIPTION_START = r'\*{2}'
 t_TIME_START = r'@'
-t_ISSUE = r'[A-Z]{3}\-\d+'
+t_ISSUE = r'[A-Z]{1,3}\-\d+'
 t_WORD = r'[!\w,\-"\.]+'
 t_TYPE = r'(?<=\n)(CODE|FD|TEST|MANUAL)(?=\r?\n)'
 

@@ -6,22 +6,9 @@
 import ply.yacc as yacc
 
 # DO NOT REMOVE! importing the tokens is required
-from jiradoc.parser.lexer import tokens
-from jiradoc.jira.story import Story
-from jiradoc.jira.subtask import SubTask
-
-
-def p_sprint_and_stories(p):
-    '''sprint-and-stories : sprint stories'''
-    for story in p[2]:
-        story.sprint = p[1]
-
-    p[0] = p[2]
-
-
-def p_sprint(p):
-    '''sprint : SPRINT_START sentence'''
-    p[0] = p[2]
+from lexer import tokens
+from story import Story
+from subtask import SubTask
 
 
 def p_stories(p):

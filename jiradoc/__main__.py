@@ -8,6 +8,7 @@ import os
 import pkg_resources
 import sys
 
+from client.jiraclient import JIRAClient
 from jiradoc.parser.parser import parser as jiradoc_parser
 
 
@@ -29,8 +30,12 @@ def main(args=None):
     with open(args.file) as f:
         content = f.read()
 
+    client = JIRAClient('http://localhost:8080', 'admin', 'admin')
     stories = jiradoc_parser.parse(content)
+
     for story in stories:
+        sprint = client.get_sprint(story.id)
+        story.sprint = sprint
         print story
         print
 

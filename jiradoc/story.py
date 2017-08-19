@@ -6,13 +6,13 @@
 
 
 class Story:
-    def __init__(self, issue, name, sub_tasks, sprint=""):
-        self.issue = issue
+    def __init__(self, id, name, sub_tasks, sprint=""):
+        self.id = id
         self.name = name
         self.sub_tasks = sub_tasks
         self.sprint = sprint
 
     def __repr__(self):
-        return 'Story    : ' + self.issue + ' ' + self.name + '\n'\
+        return 'Story    : ' + self.id + ' ' + self.name + '\n'\
                'Sprint   : ' + self.sprint + '\n' \
                'Sub-tasks: ' + str(self.sub_tasks)

@@ -4,9 +4,7 @@ This repository serves as a small library to parse a _.jiradoc_ file and extract
 
 _An example format:_
 ```
-# Sprint 3
-
-= ABC-1234 The 1st story
+= LP-1 The 1st story
 CODE
 * A sub-task @ 4h
 ** Task description!
@@ -15,7 +13,7 @@ CODE
 FD
 * A functional design sub-task @ 1h
 
-= ABC-1234 The 2nd story
+= LP-2 The 2nd story
 TEST
 * A test task @ 4h
 ```
