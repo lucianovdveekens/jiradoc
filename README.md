@@ -2,7 +2,7 @@
 
 This repository serves as a small library to parse a _.jiradoc_ file and extract JIRA sub-tasks from it which later can be inserted into JIRA using the REST API.
 
-_An example format:_
+Sample format:_
 ```
 = LP-1 The 1st story
 CODE

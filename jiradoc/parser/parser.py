@@ -7,7 +7,6 @@ import ply.yacc as yacc
 
 # DO NOT REMOVE! importing the tokens is required
 from lexer import tokens
-from story import Story
 from subtask import SubTask
 
 
@@ -15,14 +14,17 @@ def p_stories(p):
     '''stories : story stories
                | story'''
     if len(p) == 3:
-        p[0] = [p[1]] + p[2]
+        p[0] = p[1] + p[2]
     else:
-        p[0] = [p[1]]
+        p[0] = p[1]
 
 
 def p_story(p):
     '''story : STORY_START ISSUE sentence types-and-subtasks'''
-    p[0] = Story(p[2], p[3], p[4])
+    for task in p[4]:
+        task.parent_id = p[2]
+
+    p[0] = p[4]
 
 
 def p_sentence(p):

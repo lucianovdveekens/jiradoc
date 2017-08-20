@@ -31,13 +31,12 @@ def main(args=None):
         content = f.read()
 
     client = JIRAClient('http://localhost:8080', 'admin', 'admin')
-    stories = jiradoc_parser.parse(content)
+    subtasks = jiradoc_parser.parse(content)
 
-    for story in stories:
-        sprint = client.get_sprint(story.id)
-        story.sprint = sprint
-        print story
-        print
+    for subtask in subtasks:
+        sprint = client.get_sprint(subtask.parent_id)
+        subtask.sprint = sprint
+        print subtask
 
 
 if __name__ == "__main__":
