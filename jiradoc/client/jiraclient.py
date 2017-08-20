@@ -1,7 +1,7 @@
 # ------------------------------------------------------------
 # jiraclient.py
 #
-# A client that communicates with the JIRA REST API.
+# A client to communicate with the JIRA REST API.
 # ------------------------------------------------------------
 import re
 
@@ -12,9 +12,19 @@ class JIRAClient:
     def __init__(self, server, username, password):
         self.jira = JIRA(server, basic_auth=(username, password))
 
-    def get_sprint(self, issue_id):
-        issue = self.jira.issue(issue_id)
-        sprint = issue.fields.customfield_10004[0]
-        p = re.compile('(?<=name=).*?(?=,)')
-        m = p.search(sprint)
-        return m.group()
+    def insert_subtask(self, subtask):
+        data = {
+            "project": {
+                "key": "LP"
+            },
+            "parent": {
+                "id": subtask.parent_id
+            },
+            "summary": subtask.summary,
+            "description": subtask.description,
+            "issuetype": {
+                "name": "Sub-task"
+            }
+        }
+
+        self.jira.create_issue(fields=data)

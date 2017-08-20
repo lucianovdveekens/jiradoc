@@ -1,7 +1,7 @@
 # ------------------------------------------------------------
 # __main__.py
 #
-# The main program
+# The main program, TODO
 # ------------------------------------------------------------
 import argparse
 import os
@@ -34,9 +34,7 @@ def main(args=None):
     subtasks = jiradoc_parser.parse(content)
 
     for subtask in subtasks:
-        sprint = client.get_sprint(subtask.parent_id)
-        subtask.sprint = sprint
-        print subtask
+        client.insert_subtask(subtask)
 
 
 if __name__ == "__main__":

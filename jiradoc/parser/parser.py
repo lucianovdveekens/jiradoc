@@ -1,11 +1,12 @@
 # ------------------------------------------------------------
 # parser.py
 #
-# A parser containing BNF grammars to parse jiradoc tokens.
+# A parser containing BNF grammars to create sub-tasks out of
+# the jiradoc tokens.
 # ------------------------------------------------------------
 import ply.yacc as yacc
 
-# DO NOT REMOVE! importing the tokens is required
+# noinspection PyUnresolvedReferences
 from lexer import tokens
 from subtask import SubTask
 
@@ -60,9 +61,9 @@ def p_subtasks(p):
 def p_subtask(p):
     '''subtask : SUBTASK_START sentence time description
                | SUBTASK_START sentence time'''
-    task = SubTask(name=p[2], time=p[3])
+    task = SubTask(summary=p[2], estimate=p[3])
     if len(p) == 5:
-        task.desc = p[4]
+        task.description = p[4]
 
     p[0] = task
 
