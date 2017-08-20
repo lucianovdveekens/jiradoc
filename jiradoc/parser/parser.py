@@ -21,7 +21,7 @@ def p_stories(p):
 
 
 def p_story(p):
-    '''story : STORY_START ISSUE sentence types-and-subtasks'''
+    '''story : STORY_START ISSUE sentence subtasks'''
     for task in p[4]:
         task.parent_id = p[2]
 
@@ -37,21 +37,26 @@ def p_sentence(p):
         p[0] = p[1]
 
 
-def p_types_and_subtasks(p):
-    '''types-and-subtasks : TYPE subtasks types-and-subtasks
-                          | TYPE subtasks'''
+def p_subtasks(p):
+    '''subtasks : subtasks-by-type subtasks
+                | subtasks-by-type'''
+    if len(p) == 3:
+        p[0] = p[1] + p[2]
+    else:
+        p[0] = p[1]
+
+
+def p_subtasks_by_type(p):
+    '''subtasks-by-type : TYPE subtasks-without-type'''
     for task in p[2]:
         task.type = p[1]
 
-    if len(p) == 4:
-        p[0] = p[2] + p[3]
-    else:
-        p[0] = p[2]
+    p[0] = p[2]
 
 
-def p_subtasks(p):
-    '''subtasks : subtask subtasks
-                | subtask'''
+def p_subtasks_without_type(p):
+    '''subtasks-without-type : subtask subtasks-without-type
+                             | subtask'''
     if len(p) == 2:
         p[0] = [p[1]]
     if len(p) == 3:
