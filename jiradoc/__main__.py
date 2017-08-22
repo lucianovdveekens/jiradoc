@@ -34,8 +34,7 @@ def main(args=None):
     subtasks = jiradoc_parser.parse(content)
 
     for subtask in subtasks:
-        # client.insert_subtask(subtask)
-        print subtask
+        client.insert_subtask(subtask)
 
 
 if __name__ == "__main__":
