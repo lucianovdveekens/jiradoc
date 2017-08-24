@@ -4,37 +4,37 @@
 # The main program, TODO
 # ------------------------------------------------------------
 import argparse
-import os
+
 import pkg_resources
-import sys
+import yaml
 
 from client.jiraclient import JIRAClient
 from jiradoc.parser.parser import parser as jiradoc_parser
 
 
 def main(args=None):
-    parser = argparse.ArgumentParser(description='A tool that parses a JIRAdoc formatted file and returns a list of '
-                                                 'story objects')
+    parser = argparse.ArgumentParser(
+        description='A tool that parses a JIRAdoc file, extracts sub-tasks and inserts them into JIRA.')
 
     test_file = pkg_resources.resource_filename(__name__, 'data/test.jiradoc')
     parser.add_argument('-f', dest='file', default=test_file,
-                        help='A .jiradoc file containing sub-tasks to JIRA stories')
+                        help='A file containing the sub-tasks')
     args = parser.parse_args()
 
-    filename, ext = os.path.splitext(args.file)
-    if ext != '.jiradoc':
-        print 'Invalid file extension: ' + ext
-        print 'The only valid extension is .jiradoc'
-        sys.exit(1)
+    with open('data/settings.yml') as f:
+        settings = yaml.load(f)
+
+    jira_client = JIRAClient(settings['jira']['url'], settings['jira']['user'], settings['jira']['passwd'])
 
     with open(args.file) as f:
         content = f.read()
 
-    client = JIRAClient('http://localhost:8080', 'admin', 'admin')
     subtasks = jiradoc_parser.parse(content)
 
     for subtask in subtasks:
-        client.insert_subtask(subtask)
+        valid = jira_client.validate(subtask)
+        if valid:
+            jira_client.insert(subtask)
 
 
 if __name__ == "__main__":

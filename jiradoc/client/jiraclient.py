@@ -3,9 +3,6 @@
 #
 # A client to communicate with the JIRA REST API.
 # ------------------------------------------------------------
-import re
-
-import sys
 from jira import JIRA
 
 
@@ -13,11 +10,7 @@ class JIRAClient:
     def __init__(self, server, username, password):
         self.jira = JIRA(server, basic_auth=(username, password))
 
-    def insert_subtask(self, subtask):
-        valid = self._validate_summary(subtask)
-        if not valid:
-            return
-
+    def insert(self, subtask):
         data = {
             "project": {
                 "key": "LP"
@@ -35,7 +28,7 @@ class JIRAClient:
         issue = self.jira.create_issue(fields=data)
         print "Created sub-task '" + issue.key + " " + issue.fields.summary + "'"
 
-    def _validate_summary(self, subtask):
+    def validate(self, subtask):
         story = self.jira.issue(subtask.parent_id)
         current_subtasks = story.fields.subtasks
         for task in current_subtasks:
