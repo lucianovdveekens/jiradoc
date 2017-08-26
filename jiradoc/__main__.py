@@ -7,6 +7,7 @@ import argparse
 
 import pkg_resources
 import yaml
+from jira.exceptions import JIRAError
 
 from client.jiraclient import JIRAClient
 from jiradoc.parser.parser import parser as jiradoc_parser
@@ -24,7 +25,8 @@ def main(args=None):
     with open('data/settings.yml') as f:
         settings = yaml.load(f)
 
-    jira_client = JIRAClient(settings['jira']['url'], settings['jira']['user'], settings['jira']['passwd'])
+    jira_settings = settings['jira']
+    jira_client = JIRAClient(jira_settings['url'], jira_settings['user'], jira_settings['passwd'])
 
     with open(args.file) as f:
         content = f.read()
@@ -34,8 +36,10 @@ def main(args=None):
     for subtask in subtasks:
         valid = jira_client.validate(subtask)
         if valid:
-            jira_client.insert(subtask)
-
+            try:
+                jira_client.insert(subtask)
+            except JIRAError as e:
+                print "Failed to insert task:", e.text
 
 if __name__ == "__main__":
     main()

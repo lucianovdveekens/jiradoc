@@ -3,6 +3,7 @@
 #
 # A client to communicate with the JIRA REST API.
 # ------------------------------------------------------------
+import yaml
 from jira import JIRA
 
 
@@ -22,8 +23,15 @@ class JIRAClient:
             "description": subtask.description,
             "issuetype": {
                 "name": "Sub-task"
-            }
+            },
         }
+
+        with open('data/settings.yml') as f:
+            settings = yaml.load(f)
+
+        custom_fields = settings['custom_fields']
+        for custom_field, value in custom_fields.items():
+            data[custom_field] = value
 
         issue = self.jira.create_issue(fields=data)
         print "Created sub-task '" + issue.key + " " + issue.fields.summary + "'"

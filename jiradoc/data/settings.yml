@@ -2,3 +2,7 @@ jira:
   url: http://localhost:8080
   user: admin
   passwd: admin
+
+custom_fields:
+  fixVersions: [{ "name": "Version 1.0" }]
+  components: [{ "name": "Server" }]
