@@ -26,10 +26,10 @@ class JIRAClient:
             },
         }
 
-        with open('data/settings.yml') as f:
-            settings = yaml.load(f)
+        with open('data/config.yml') as f:
+            config = yaml.load(f)
 
-        custom_fields = settings['custom_fields']
+        custom_fields = config['custom_fields']
         for custom_field, value in custom_fields.items():
             data[custom_field] = value
 

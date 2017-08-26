@@ -6,6 +6,7 @@
 import argparse
 
 import pkg_resources
+import sys
 import yaml
 from jira.exceptions import JIRAError
 
@@ -22,11 +23,15 @@ def main(args=None):
                         help='A file containing the sub-tasks')
     args = parser.parse_args()
 
-    with open('data/settings.yml') as f:
-        settings = yaml.load(f)
+    try:
+        with open('data/config.yml') as f:
+            config = yaml.load(f)
+    except IOError as e:
+        print "Failed to open settings:", e
+        sys.exit(1)
 
-    jira_settings = settings['jira']
-    jira_client = JIRAClient(jira_settings['url'], jira_settings['user'], jira_settings['passwd'])
+    jira_config = config['jira']
+    jira_client = JIRAClient(jira_config['url'], jira_config['user'], jira_config['passwd'])
 
     with open(args.file) as f:
         content = f.read()
