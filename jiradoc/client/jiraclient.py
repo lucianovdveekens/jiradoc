@@ -12,6 +12,8 @@ class JIRAClient:
         self.jira = JIRA(server, basic_auth=(username, password))
 
     def insert(self, subtask):
+        self._validate(subtask)
+
         data = {
             "project": {
                 "key": "LP"
@@ -30,18 +32,21 @@ class JIRAClient:
             config = yaml.load(f)
 
         custom_fields = config['custom_fields']
-        for custom_field, value in custom_fields.items():
-            data[custom_field] = value
+        if custom_fields is not None:
+            for custom_field, value in custom_fields.items():
+                data[custom_field] = value
 
         issue = self.jira.create_issue(fields=data)
         print "Created sub-task '" + issue.key + " " + issue.fields.summary + "'"
 
-    def validate(self, subtask):
+    def _validate(self, subtask):
         story = self.jira.issue(subtask.parent_id)
         current_subtasks = story.fields.subtasks
         for task in current_subtasks:
             if subtask.summary == task.fields.summary:
-                print subtask.parent_id + ' already has a sub-task named \'' + subtask.summary + '\''
-                return False
+                raise ValidationError(subtask.parent_id + ' already has a sub-task named \'' + subtask.summary + '\'')
 
-        return True
+
+class ValidationError(Exception):
+    def __init__(self, message):
+        super(ValidationError, self).__init__(message)

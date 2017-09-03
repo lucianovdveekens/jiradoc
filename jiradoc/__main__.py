@@ -10,7 +10,7 @@ import sys
 import yaml
 from jira.exceptions import JIRAError
 
-from client.jiraclient import JIRAClient
+from client.jiraclient import JIRAClient, ValidationError
 from jiradoc.parser.parser import parser as jiradoc_parser
 
 
@@ -27,11 +27,10 @@ def main(args=None):
         with open('data/config.yml') as f:
             config = yaml.load(f)
     except IOError as e:
-        print "Failed to open settings:", e
+        print "Failed to load config:", e
         sys.exit(1)
 
-    jira_config = config['jira']
-    jira_client = JIRAClient(jira_config['url'], jira_config['user'], jira_config['passwd'])
+    jira_client = JIRAClient(config['jira']['url'], config['jira']['user'], config['jira']['passwd'])
 
     with open(args.file) as f:
         content = f.read()
@@ -39,12 +38,11 @@ def main(args=None):
     subtasks = jiradoc_parser.parse(content)
 
     for subtask in subtasks:
-        valid = jira_client.validate(subtask)
-        if valid:
-            try:
-                jira_client.insert(subtask)
-            except JIRAError as e:
-                print "Failed to insert task:", e.text
+        try:
+            jira_client.insert(subtask)
+        except (JIRAError, ValidationError) as e:
+            sys.exit("Failed to insert task: " + str(e))
+
 
 if __name__ == "__main__":
     main()
