@@ -10,7 +10,7 @@ tokens = ['STORY_START', 'TASK_START', 'DESC_START', 'TIME_START', 'ISSUE', 'WOR
 
 # Regular expression rules for simple tokens
 t_TYPE = r'(CODE|FD|TEST|MANUAL):'
-t_ISSUE = r'[A-Z]{1,3}\-\d+'
+t_ISSUE = r'[A-Z]+-\d+'
 t_WORD = r'[\w!\",]+'
 t_DESC_START = r'--'
 t_TASK_START = r'-'
@@ -30,13 +30,13 @@ def t_error(t):
 # Build the lexer
 lexer = lex.lex()
 
-# # Testing
-# # Give the lexer some input
-# lexer.input(open('jiradoc/data/test.jiradoc').read())
-#
-# # Tokenize
-# while True:
-#     tok = lexer.token()
-#     if not tok:
-#         break  # No more input
-#     print(tok)
+# Testing
+# Give the lexer some input
+lexer.input(open('jiradoc/data/test.jiradoc').read())
+
+# Tokenize
+while True:
+    tok = lexer.token()
+    if not tok:
+        break  # No more input
+    print(tok)
