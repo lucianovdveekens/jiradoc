@@ -64,8 +64,8 @@ def p_subtasks_without_type(p):
 
 
 def p_subtask(p):
-    '''subtask : SUBTASK_START sentence time description
-               | SUBTASK_START sentence time'''
+    '''subtask : TASK_START sentence time description
+               | TASK_START sentence time'''
     task = SubTask(summary=p[2], estimate=p[3])
     if len(p) == 5:
         task.description = p[4]
@@ -79,7 +79,7 @@ def p_time(p):
 
 
 def p_description(p):
-    '''description : DESCRIPTION_START sentence'''
+    '''description : DESC_START sentence'''
     p[0] = p[2]
 
 

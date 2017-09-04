@@ -4,9 +4,9 @@
 # The main program, TODO
 # ------------------------------------------------------------
 import argparse
+import sys
 
 import pkg_resources
-import sys
 import yaml
 from jira.exceptions import JIRAError
 
@@ -35,6 +35,7 @@ def main(args=None):
     with open(args.file) as f:
         content = f.read()
 
+    # TODO: handle parser errors
     subtasks = jiradoc_parser.parse(content)
 
     for subtask in subtasks:
