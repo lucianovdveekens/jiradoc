@@ -11,7 +11,7 @@ tokens = ['STORY_START', 'TASK_START', 'DESC_START', 'TIME_START', 'ISSUE', 'WOR
 # Regular expression rules for simple tokens
 t_TYPE = r'(CODE|FD|TEST|MANUAL):'
 t_ISSUE = r'[A-Z]+-\d+'
-t_WORD = r'[\w!\",]+'
+t_WORD = r'[^-=@\s]+'
 t_DESC_START = r'--'
 t_TASK_START = r'-'
 t_STORY_START = r'='
