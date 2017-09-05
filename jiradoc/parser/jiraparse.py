@@ -1,5 +1,5 @@
 # ------------------------------------------------------------
-# parser.py
+# jiraparse.py
 #
 # A parser containing BNF grammars to create sub-tasks out of
 # the jiradoc tokens.
@@ -7,7 +7,7 @@
 import ply.yacc as yacc
 
 # noinspection PyUnresolvedReferences
-from lexer import tokens
+from jiralex import tokens
 from subtask import SubTask
 
 
@@ -88,7 +88,7 @@ def p_error(p):
 
 
 # Build the parser
-parser = yacc.yacc()
+jiraparser = yacc.yacc()
 
 # # Testing
 # content = open('../data/test.jiradoc').read()

@@ -11,7 +11,7 @@ import yaml
 from jira.exceptions import JIRAError
 
 from client.jiraclient import JIRAClient, ValidationError
-from jiradoc.parser.parser import parser as jiradoc_parser
+from parser.jiraparse import jiraparser
 
 
 def main(args=None):
@@ -36,7 +36,7 @@ def main(args=None):
         content = f.read()
 
     # TODO: handle parser errors
-    subtasks = jiradoc_parser.parse(content)
+    subtasks = jiraparser.parse(content)
 
     for subtask in subtasks:
         try:
