@@ -5,7 +5,7 @@
 # ------------------------------------------------------------
 
 
-class SubTask:
+class SubTask(object):
     def __init__(self, summary, estimate, parent_id="", type="", description=""):
         self.parent_id = parent_id
         self.summary = summary

@@ -4,14 +4,18 @@
 # A client to communicate with the JIRA REST API.
 # ------------------------------------------------------------
 import yaml
-from jira import JIRA
+from jira.client import JIRA
 
 
-class JIRAClient:
+class JIRAClient(object):
     def __init__(self, server, username, password):
         self.jira = JIRA(server, basic_auth=(username, password))
 
-    def insert(self, subtask):
+    def insert_subtasks(self, subtasks):
+        for subtask in subtasks:
+            self._insert_subtask(subtask)
+
+    def _insert_subtask(self, subtask):
         self._validate(subtask)
 
         data = {
