@@ -16,11 +16,8 @@ class JIRAClient(object):
             raise ClientError("Failed connecting to JIRA. Is it up and running?")
 
     def insert_subtasks(self, subtasks):
-        try:
-            for subtask in subtasks:
-                self._insert_subtask(subtask)
-        except JIRAError as e:
-            raise ClientError(e.message)
+        for subtask in subtasks:
+            self._insert_subtask(subtask)
 
     def _insert_subtask(self, subtask):
         self._validate(subtask)
@@ -28,8 +25,12 @@ class JIRAClient(object):
         fields = _to_fields(subtask)
         _append_custom_fields(fields)
 
-        issue = self.jira.create_issue(fields=fields)
-        print("Created sub-task '%s' under parent '%s'" % (issue.key + issue.fields.summary, subtask.parent_id))
+        try:
+            issue = self.jira.create_issue(fields=fields)
+        except JIRAError as e:
+            raise ClientError(e.message)
+
+        print("Created sub-task '%s %s'" % (issue.key, issue.fields.summary))
 
     def _validate(self, subtask):
         story = self.jira.issue(subtask.parent_id)
