@@ -1,11 +1,6 @@
-# ------------------------------------------------------------
-# subtask.py
-#
-# A class representing a JIRA sub-task
-# ------------------------------------------------------------
-
-
 class SubTask(object):
+    """This class represents a JIRA sub-task"""
+
     def __init__(self, summary, estimate, parent_id="", type="", description=""):
         self.parent_id = parent_id
         self.summary = summary

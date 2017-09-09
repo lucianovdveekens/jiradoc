@@ -1,8 +1,3 @@
-# ------------------------------------------------------------
-# jiralex.py
-#
-# A tokenizer for the jiradoc language.
-# ------------------------------------------------------------
 import ply.lex as lex
 
 # List of token names

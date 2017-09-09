@@ -1,28 +1,22 @@
-# ------------------------------------------------------------
-# __main__.py
-#
-# The main program, TODO
-# ------------------------------------------------------------
 import argparse
 import sys
 
 import pkg_resources
 import yaml
-from jira.exceptions import JIRAError
 
-from client.jiraclient import JIRAClient, ValidationError
+from client.jiraclient import JIRAClient, ClientError
 from parser.jiraparse import jiraparser
 
 
 def main():
-    parsed_args = _cli_parse()
-    subtasks = _parse_file(parsed_args.file)
-    jira_client = _create_jira_client()
-
     try:
-        jira_client.insert_subtasks(subtasks)
-    except (JIRAError, ValidationError) as e:
-        sys.exit("Failed to insert tasks: " + str(e))
+        parsed_args = _cli_parse()
+        sub_tasks = _parse_file(parsed_args.file)
+
+        client = _init_jira_client()
+        client.insert_subtasks(sub_tasks)
+    except ClientError as e:
+        sys.exit(e)
 
 
 def _cli_parse():
@@ -34,7 +28,7 @@ def _cli_parse():
     return cli_args
 
 
-def _create_jira_client():
+def _init_jira_client():
     config = _load_config()
     return JIRAClient(config['jira']['url'], config['jira']['user'], config['jira']['passwd'])
 

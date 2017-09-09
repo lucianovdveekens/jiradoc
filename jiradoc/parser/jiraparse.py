@@ -1,9 +1,3 @@
-# ------------------------------------------------------------
-# jiraparse.py
-#
-# A parser containing BNF grammars to create sub-tasks out of
-# the jiradoc tokens.
-# ------------------------------------------------------------
 import ply.yacc as yacc
 
 # noinspection PyUnresolvedReferences
@@ -36,6 +30,7 @@ def p_words(p):
     else:
         p[0] = p[1]
 
+
 def p_subtasks(p):
     '''subtasks : subtasks-by-type subtasks
                 | subtasks-by-type'''
@@ -48,7 +43,7 @@ def p_subtasks(p):
 def p_subtasks_by_type(p):
     '''subtasks-by-type : TYPE subtasks-without-type'''
     for task in p[2]:
-        task.type = p[1].replace(':','')
+        task.type = p[1].replace(':', '')
 
     p[0] = p[2]
 
