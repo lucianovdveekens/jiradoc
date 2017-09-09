@@ -1,9 +1,8 @@
-import sys
-
-import yaml
 from jira import JIRA
 from jira import JIRAError
 from requests import ConnectionError
+
+import config
 
 
 class JIRAClient(object):
@@ -58,19 +57,9 @@ def _to_fields(subtask):
 
 
 def _append_custom_fields(fields):
-    config = _load_config()
-    custom_fields = config['custom_fields']
-    if custom_fields is not None:
-        for custom_field, value in custom_fields.items():
-            fields[custom_field] = value
-
-
-def _load_config():
-    try:
-        with open('data/config.yml') as f:
-            return yaml.load(f)
-    except IOError as e:
-        sys.exit("Failed to load config: " + str(e))
+    custom_fields = config.load('custom_fields')
+    for custom_field, value in custom_fields.items():
+        fields[custom_field] = value
 
 
 class ClientError(Exception):

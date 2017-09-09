@@ -2,8 +2,8 @@ import argparse
 import sys
 
 import pkg_resources
-import yaml
 
+import config
 from client import JIRAClient, ClientError
 from parser import parser
 
@@ -29,8 +29,8 @@ def _cli_parse():
 
 
 def _init_client():
-    config = _load_config()
-    return JIRAClient(config['jira']['url'], config['jira']['user'], config['jira']['passwd'])
+    jira = config.load('jira')
+    return JIRAClient(jira['url'], jira['user'], jira['passwd'])
 
 
 def _parse_file(file):
@@ -40,14 +40,6 @@ def _parse_file(file):
     # TODO: handle parser errors
     subtasks = parser.parse(content)
     return subtasks
-
-
-def _load_config():
-    try:
-        with open('data/config.yml') as f:
-            return yaml.load(f)
-    except IOError as e:
-        sys.exit("Failed to load config: " + str(e))
 
 
 if __name__ == "__main__":
