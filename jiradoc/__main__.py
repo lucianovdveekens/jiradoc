@@ -4,8 +4,8 @@ import sys
 import pkg_resources
 import yaml
 
-from client.jiraclient import JIRAClient, ClientError
-from parser.jiraparse import jiraparser
+from client import JIRAClient, ClientError
+from parser import parser
 
 
 def main():
@@ -13,7 +13,7 @@ def main():
         parsed_args = _cli_parse()
         sub_tasks = _parse_file(parsed_args.file)
 
-        client = _init_jira_client()
+        client = _init_client()
         client.insert_subtasks(sub_tasks)
     except ClientError as e:
         sys.exit(e)
@@ -28,7 +28,7 @@ def _cli_parse():
     return cli_args
 
 
-def _init_jira_client():
+def _init_client():
     config = _load_config()
     return JIRAClient(config['jira']['url'], config['jira']['user'], config['jira']['passwd'])
 
@@ -38,7 +38,7 @@ def _parse_file(file):
         content = f.read()
 
     # TODO: handle parser errors
-    subtasks = jiraparser.parse(content)
+    subtasks = parser.parse(content)
     return subtasks
 
 

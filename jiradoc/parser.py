@@ -1,7 +1,7 @@
 import ply.yacc as yacc
 
 # noinspection PyUnresolvedReferences
-from jiralex import tokens
+from lexer import tokens
 from subtask import SubTask
 
 
@@ -83,7 +83,7 @@ def p_error(p):
 
 
 # Build the parser
-jiraparser = yacc.yacc()
+parser = yacc.yacc()
 
 # # Testing
 # content = open('../data/test.jiradoc').read()

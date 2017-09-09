@@ -1,11 +1,9 @@
 import sys
 
 import yaml
-from jira.client import JIRA
-from jira.exceptions import JIRAError
+from jira import JIRA
+from jira import JIRAError
 from requests import ConnectionError
-
-from client.exceptions import ValidationError, ClientError
 
 
 class JIRAClient(object):
@@ -72,3 +70,11 @@ def _load_config():
             return yaml.load(f)
     except IOError as e:
         sys.exit("Failed to load config: " + str(e))
+
+
+class ClientError(Exception):
+    """Raised when a JIRA client exception occurred"""
+
+
+class ValidationError(ClientError):
+    """Raised when a sub-task is invalid"""
