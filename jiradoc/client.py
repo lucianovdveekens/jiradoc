@@ -36,7 +36,7 @@ class JIRAClient(object):
         existing_subtasks = story.fields.subtasks
         for existing_task in existing_subtasks:
             if subtask.summary == existing_task.fields.summary:
-                raise ValidationError(subtask.parent_id + ' already has a sub-task named \'' + subtask.summary + '\'')
+                raise ValidationError("%s already has a sub-task named '%s'" % (subtask.parent_id, subtask.summary))
 
 
 def _to_fields(subtask):

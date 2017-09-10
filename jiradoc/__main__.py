@@ -4,18 +4,19 @@ import sys
 import pkg_resources
 
 import config
+import parser
 from client import JIRAClient, ClientError
-from parser import parser
+from parser import ParseError
 
 
 def main():
     try:
         parsed_args = _cli_parse()
-        sub_tasks = _parse_file(parsed_args.file)
+        subtasks = _parse_file(parsed_args.file)
 
         client = _init_client()
-        client.insert_subtasks(sub_tasks)
-    except ClientError as e:
+        client.insert_subtasks(subtasks)
+    except (ParseError, ClientError) as e:
         sys.exit(e)
 
 
@@ -37,7 +38,6 @@ def _parse_file(file):
     with open(file) as f:
         content = f.read()
 
-    # TODO: handle parser errors
     subtasks = parser.parse(content)
     return subtasks
 

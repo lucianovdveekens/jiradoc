@@ -1,3 +1,7 @@
+from __future__ import print_function
+
+import sys
+
 import ply.yacc as yacc
 
 # noinspection PyUnresolvedReferences
@@ -58,13 +62,19 @@ def p_subtasks_without_type(p):
 
 
 def p_subtask(p):
-    '''subtask : TASK_START words time description
-               | TASK_START words time'''
-    task = SubTask(summary=p[2], estimate=p[3])
-    if len(p) == 5:
-        task.description = p[4]
+    '''subtask : TASK_START words time'''
+    p[0] = SubTask(summary=p[2], estimate=p[3])
 
-    p[0] = task
+
+def p_subtask_description(p):
+    '''subtask : TASK_START words time description'''
+    p[0] = SubTask(summary=p[2], estimate=p[3], description=p[4])
+
+
+def p_subtask_missing_time(p):
+    '''subtask : TASK_START words error description
+               | TASK_START words error'''
+    raise ParseError("'%s' is missing a time estimate." % p[2])
 
 
 def p_time(p):
@@ -79,11 +89,25 @@ def p_description(p):
 
 # Error rule for syntax errors
 def p_error(p):
-    print("Syntax error in input: " + str(p))
+    global error_count
+    error_count += 1
+    print("Syntax error in input: " + str(p), file=sys.stderr)
 
 
-# Build the parser
-parser = yacc.yacc()
+error_count = 0
+
+
+def parse(content):
+    parser = yacc.yacc()
+    parsed_content = parser.parse(content)
+    if error_count > 0:
+        raise ParseError(str(error_count) + " parse error(s) found")
+
+    return parsed_content
+
+
+class ParseError(Exception):
+    """Raised when the content could not be parsed"""
 
 # # Testing
 # content = open('../data/test.jiradoc').read()
