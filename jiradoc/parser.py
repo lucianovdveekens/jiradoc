@@ -46,10 +46,16 @@ def p_subtasks(p):
 
 def p_subtasks_by_type(p):
     '''subtasks-by-type : TYPE subtasks-without-type'''
+    type = p[1].replace(':', '')
     for task in p[2]:
-        task.type = p[1].replace(':', '')
+        task.type = type
 
     p[0] = p[2]
+
+
+def p_subtasks_missing_type(p):
+    '''subtasks-by-type : error subtasks-without-type'''
+    raise ParseError("Expected either CODE, TEST, FD or MANUAL followed by a ':'")
 
 
 def p_subtasks_without_type(p):
