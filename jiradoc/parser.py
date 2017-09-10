@@ -53,7 +53,12 @@ def p_subtasks_by_type(p):
     p[0] = p[2]
 
 
-def p_subtasks_missing_type(p):
+def p_subtasks_by_type_error_missing_subtasks(p):
+    '''subtasks-by-type : TYPE error'''
+    raise ParseError("A type should be followed by one or more sub-tasks")
+
+
+def p_subtasks_by_type_error_missing_type(p):
     '''subtasks-by-type : error subtasks-without-type'''
     raise ParseError("Expected either CODE, TEST, FD or MANUAL followed by a ':'")
 
@@ -68,18 +73,17 @@ def p_subtasks_without_type(p):
 
 
 def p_subtask(p):
-    '''subtask : TASK_START words time'''
-    p[0] = SubTask(summary=p[2], estimate=p[3])
+    '''subtask : TASK_START words time
+               | TASK_START words time description'''
+    subtask = SubTask(summary=p[2], estimate=p[3])
+    if len(p) == 5:
+        subtask.description = p[4]
+
+    p[0] = subtask
 
 
-def p_subtask_description(p):
-    '''subtask : TASK_START words time description'''
-    p[0] = SubTask(summary=p[2], estimate=p[3], description=p[4])
-
-
-def p_subtask_missing_time(p):
-    '''subtask : TASK_START words error description
-               | TASK_START words error'''
+def p_subtask_error_missing_time(p):
+    '''subtask : TASK_START words error'''
     raise ParseError("'%s' is missing a time estimate." % p[2])
 
 
@@ -114,10 +118,3 @@ def parse(content):
 
 class ParseError(Exception):
     """Raised when the content could not be parsed"""
-
-# # Testing
-# content = open('../data/test.jiradoc').read()
-# subtasks = parser.parse(content)
-#
-# for subtask in subtasks:
-#     print subtask
