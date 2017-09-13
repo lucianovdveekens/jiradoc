@@ -22,12 +22,12 @@ class JIRAClient(object):
         self._validate(subtask)
 
         fields = _to_fields(subtask)
-        _append_custom_fields(fields)
+        _append_custom_fields(fields, subtask.type)
 
         try:
             issue = self.jira.create_issue(fields=fields)
         except JIRAError as e:
-            raise ClientError(e.message)
+            raise ClientError('Failed to insert subtask: %s,\nResponse from client: %s' % (fields, e.response.text))
 
         print("Created sub-task '%s %s'" % (issue.key, issue.fields.summary))
 
@@ -56,9 +56,13 @@ def _to_fields(subtask):
     return fields
 
 
-def _append_custom_fields(fields):
+def _append_custom_fields(fields, type):
     custom_fields = config.load('custom_fields')
     for custom_field, value in custom_fields.items():
+        if isinstance(value, dict) and type in value:
+            # this custom field has type-specific values
+            value = value[type]
+
         fields[custom_field] = value
 
 

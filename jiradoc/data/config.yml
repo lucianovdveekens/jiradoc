@@ -5,4 +5,8 @@ jira:
 
 custom_fields:
   fixVersions: [{ "name": "Version 1.0" }]
-  components: [{ "name": "Server" }]
+  components:
+    CODE:   [{ "name": "Server" }]
+    TEST:   [{ "name": "Test" }]
+    FD:     [{ "name": "Design" }]
+    MANUAL: [{ "name": "Documentation" }]
