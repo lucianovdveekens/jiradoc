@@ -1,3 +1,5 @@
+import json
+
 from jira import JIRA
 from jira import JIRAError
 from requests import ConnectionError
@@ -23,6 +25,7 @@ class JIRAClient(object):
 
         fields = _to_fields(subtask)
         _append_custom_fields(fields, subtask.type)
+        # print(json.dumps(fields, sort_keys=True, indent=4))
 
         try:
             issue = self.jira.create_issue(fields=fields)

@@ -4,9 +4,15 @@ jira:
   passwd: admin
 
 custom_fields:
-  fixVersions: [{ "name": "Version 1.0" }]
+  fixVersions: [{ name: "Version 1.0" }]
+  customfield_10100:
+    # Account: values are IDs
+    CODE:   "1"
+    TEST:   "2"
+    FD:     "1"
+    MANUAL: "2"
   components:
-    CODE:   [{ "name": "Server" }]
-    TEST:   [{ "name": "Test" }]
-    FD:     [{ "name": "Design" }]
-    MANUAL: [{ "name": "Documentation" }]
+    CODE:   [{ name: "Server" }]
+    TEST:   [{ name: "Test" }]
+    FD:     [{ name: "Design" }]
+    MANUAL: [{ name: "Documentation" }]
