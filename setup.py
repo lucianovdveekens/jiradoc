@@ -6,7 +6,7 @@ with open('README.rst') as f:
 setup(
     name='jiradoc',
     version='0.1',
-    description='A JIRAdoc parser',
+    description='A small Python module to parse JIRAdoc markup files and insert them into JIRA',
     long_description=long_description,
     url='https://github.com/lucianovdveekens/jiradoc',
     author='Luciano van der Veekens',

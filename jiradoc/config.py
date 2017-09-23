@@ -31,6 +31,7 @@ def load(key, required=True):
 
 def _create_user_config(config_file):
     """Create the user's configuration file"""
+    print('Creating configuration file at: ' + config_file)
     config_dir = os.path.dirname(config_file)
     if not os.path.exists(config_dir):
         os.makedirs(config_dir)

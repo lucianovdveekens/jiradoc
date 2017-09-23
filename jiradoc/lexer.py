@@ -24,14 +24,3 @@ def t_error(t):
 
 # Build the lexer
 lexer = lex.lex()
-
-# # Testing
-# # Give the lexer some input
-# lexer.input(open('jiradoc/data/test.jiradoc').read())
-#
-# # Tokenize
-# while True:
-#     tok = lexer.token()
-#     if not tok:
-#         break  # No more input
-#     print(tok)
