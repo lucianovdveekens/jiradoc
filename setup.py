@@ -14,7 +14,7 @@ setup(
     packages=find_packages(),
     install_requires=['ply', 'jira', 'pyyaml', 'appdirs'],
     package_data={
-        'jiradoc': ['data/test.jiradoc']
+        'jiradoc': ['data/test.jiradoc', 'data/sample_config.yml']
     },
     entry_points={
         'console_scripts': [
