@@ -8,7 +8,7 @@ class SubTask(object):
         self.type = type
         self.description = description
 
-    def __str__(self):
+    def __repr__(self):
         return "SubTask(" \
                "parent_id=" + self.parent_id + \
                ",type=" + self.type + \
@@ -16,3 +16,6 @@ class SubTask(object):
                ",estimate=" + self.estimate + \
                ",description=" + self.description + \
                ")"
+
+    def __eq__(self, other):
+        return self.__dict__ == other.__dict__

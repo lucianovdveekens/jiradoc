@@ -1,8 +1,3 @@
-from __future__ import print_function
-
-from lexer import lexer
-
-
 def test_lex_parent_issue():
     tokens = _lex("= LP-1 A story")
     assert len(tokens) is 4
@@ -72,6 +67,7 @@ def test_lex_story():
 
 
 def _lex(input):
+    from lexer import lexer
     lexer.input(input)
 
     tokens = []
