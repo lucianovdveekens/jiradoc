@@ -1,12 +1,19 @@
+# Sample configuration file
+
+# JIRA connection properties
 jira:
+  # The URL where JIRA is hosted
   url: http://localhost:8080
+  # The credentials used for basic authentication
   user: admin
   passwd: admin
 
-custom_fields:
+# Additional fields that are appended to parsed sub-tasks before they're
+# inserted into JIRA (optional)
+default_fields:
   fixVersions: [{ name: "Version 1.0" }]
+  # Account (values are IDs)
   customfield_10100:
-    # Account: values are IDs
     CODE:   "1"
     TEST:   "2"
     FD:     "1"

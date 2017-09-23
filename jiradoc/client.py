@@ -1,4 +1,4 @@
-import json
+from __future__ import print_function
 
 from jira import JIRA
 from jira import JIRAError
@@ -15,16 +15,18 @@ class JIRAClient(object):
             self.jira = JIRA(server, basic_auth=(username, password), max_retries=0, logging=False)
         except ConnectionError:
             raise ClientError("Failed connecting to JIRA. Is it up and running?")
+        except JIRAError as e:
+            raise ClientError(e.text)
 
     def insert_subtasks(self, subtasks):
         for subtask in subtasks:
             self._insert_subtask(subtask)
 
     def _insert_subtask(self, subtask):
-        self._validate(subtask)
+        # self._validate(subtask)
 
         fields = _to_fields(subtask)
-        _append_custom_fields(fields, subtask.type)
+        _append_default_fields(fields, subtask.type)
         # print(json.dumps(fields, sort_keys=True, indent=4))
 
         try:
@@ -59,14 +61,17 @@ def _to_fields(subtask):
     return fields
 
 
-def _append_custom_fields(fields, type):
-    custom_fields = config.load('custom_fields')
-    for custom_field, value in custom_fields.items():
+def _append_default_fields(fields, type):
+    default_fields = config.load('default_fields', required=False)
+    if not default_fields:
+        return
+
+    for field, value in default_fields.items():
         if isinstance(value, dict) and type in value:
             # this custom field has type-specific values
             value = value[type]
 
-        fields[custom_field] = value
+        fields[field] = value
 
 
 class ClientError(Exception):

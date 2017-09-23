@@ -10,6 +10,7 @@ from parser import ParseError
 
 
 def main():
+    """The program's main entry point"""
     try:
         parsed_args = _cli_parse()
         subtasks = _parse_file(parsed_args.file)
@@ -30,11 +31,13 @@ def _cli_parse():
 
 
 def _init_client():
+    """Connect to JIRA and return the client"""
     jira = config.load('jira')
     return JIRAClient(jira['url'], jira['user'], jira['passwd'])
 
 
 def _parse_file(file):
+    """Parse the JIRAdoc file and return a list of sub-tasks"""
     with open(file) as f:
         content = f.read()
 
