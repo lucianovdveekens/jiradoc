@@ -38,7 +38,7 @@ def _cli_parse():
     parser = DefaultHelpParser(prog='jiradoc',
                                description='Extract sub-tasks from a file and insert them into JIRA using the REST ' \
                                            'API.')
-    parser.add_argument(dest='file', help='A file containing JIRAdoc markup language')
+    parser.add_argument(dest='file', help='A file containing sub-tasks for one or more stories')
     cli_args = parser.parse_args()
     return cli_args
 
