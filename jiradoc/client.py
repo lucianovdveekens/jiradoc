@@ -51,16 +51,19 @@ class JIRAClient(object):
 
 def _to_fields(subtask):
     fields = {
-        "project": {
-            "key": re.search('\w+', subtask.parent_id).group(0)
+        'project': {
+            'key': re.search("\w+", subtask.parent_id).group(0)
         },
-        "parent": {
-            "id": subtask.parent_id
+        'parent': {
+            'id': subtask.parent_id
         },
-        "summary": subtask.summary,
-        "description": subtask.description,
-        "issuetype": {
-            "name": "Sub-task"
+        'summary': subtask.summary,
+        'description': subtask.description,
+        'issuetype': {
+            'name': 'Sub-task'
+        },
+        'timetracking': {
+            'originalEstimate': subtask.estimate,
         }
     }
     return fields
