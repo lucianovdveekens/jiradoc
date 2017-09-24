@@ -1,5 +1,5 @@
-from parser import parse
-from subtask import SubTask
+from jiradoc.parser import parse
+from jiradoc.subtask import SubTask
 
 
 def test_parse_subtask():

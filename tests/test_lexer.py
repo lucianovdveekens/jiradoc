@@ -67,7 +67,7 @@ def test_lex_story():
 
 
 def _lex(input):
-    from lexer import lexer
+    from jiradoc.lexer import lexer
     lexer.input(input)
 
     tokens = []
