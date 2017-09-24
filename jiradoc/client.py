@@ -23,7 +23,7 @@ class JIRAClient(object):
             self._insert_subtask(subtask)
 
     def _insert_subtask(self, subtask):
-        # self._validate(subtask)
+        self._validate(subtask)
 
         fields = _to_fields(subtask)
         _append_default_fields(fields, subtask.type)

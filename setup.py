@@ -16,7 +16,7 @@ setup(
     setup_requires=['pytest-runner'],
     tests_require=['pytest'],
     package_data={
-        'jiradoc': ['data/test.jiradoc', 'data/sample_config.yml']
+        'jiradoc': ['data/sample_config.yml']
     },
     entry_points={
         'console_scripts': [

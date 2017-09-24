@@ -2,14 +2,11 @@
 
 # JIRA connection properties
 jira:
-  # The URL where JIRA is hosted
   url: http://localhost:8080
-  # The credentials used for basic authentication
   user: admin
   passwd: admin
 
-# Additional fields that are appended to parsed sub-tasks before they're
-# inserted into JIRA (optional)
+# Extra fields, appended to parsed sub-tasks before they're inserted (optional)
 default_fields:
   fixVersions: [{ name: "Version 1.0" }]
   # Account (values are IDs)

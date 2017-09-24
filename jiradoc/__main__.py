@@ -1,8 +1,6 @@
 import argparse
 import sys
 
-import pkg_resources
-
 import config
 import parser
 from client import JIRAClient, ClientError
@@ -22,10 +20,10 @@ def main():
 
 
 def _cli_parse():
-    parser = argparse.ArgumentParser(
-        description='A tool that parses a JIRAdoc file, extracts sub-tasks and inserts them into JIRA.')
-    test_file = pkg_resources.resource_filename(__name__, 'data/test.jiradoc')
-    parser.add_argument('-f', dest='file', default=test_file, help='A file containing the sub-tasks')
+    parser = DefaultHelpParser(prog='jiradoc',
+                               description='Extract sub-tasks from a file and insert them into JIRA using the REST ' \
+                                           'API.')
+    parser.add_argument(dest='file', help='A file containing JIRAdoc markup language')
     cli_args = parser.parse_args()
     return cli_args
 
@@ -43,6 +41,13 @@ def _parse_file(file):
 
     subtasks = parser.parse(content)
     return subtasks
+
+
+class DefaultHelpParser(argparse.ArgumentParser):
+    def error(self, message):
+        sys.stderr.write('error: %s\n' % message)
+        self.print_help()
+        sys.exit(2)
 
 
 if __name__ == "__main__":
