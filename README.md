@@ -1,6 +1,6 @@
 # JIRAdoc
 
-Simplify the insertion of sub-tasks into JIRA by defining them in a specially formatted text file. This saves you the trouble of going through the same UI steps to create a sub-task over and over again.
+Simplify the insertion of sub-tasks into JIRA by defining them in a specially formatted text file and sending them to the JIRA REST API. Hopefully, this saves you the trouble of going through the same UI dialogs over and over again to create a new sub-task.
 
 ## Prerequisites
 
@@ -16,7 +16,7 @@ $ pip install git+https://github.com/lucianovdveekens/jiradoc
 
 ## Usage
 
-Below is an example text file containing sub-tasks that we're willing to insert into JIRA.
+The example below showcases the format of the expected input:
 
 ```
 = ABC-1 My story
@@ -32,18 +32,28 @@ MANUAL:
 - Add a section describing the new functionality @ 2h
 ```
 
-Save it to a text file and provide it as an argument to the program.
-
+Only one story is shown here, but it's okay to define multiple stories in a single file. Once you're ready to insert them, run the following command:
 
 ```
 $ python -m jiradoc tasks.txt
+Logging to: /home/luciano/.cache/jiradoc/log/jiradoc.log
+Creating configuration file at: /home/luciano/.config/jiradoc/config.yml
+Loading configuration: /home/luciano/.config/jiradoc/config.yml
+Created sub-task 'ABC-2 This is a coding task to implement a feature'
+Created sub-task 'ABC-3 Write test specification'
+Created sub-task 'ABC-4 Test the new feature'
+Created sub-task 'ABC-5 Update the functional design'
+Created sub-task 'ABC-6 Add a section describing the new functionality'
+
 ```
 
 ## Configuration
 
+TODO
+
 ## Running the tests
 
-Explain how to run the automated tests for this system
+TODO
 
 ## License
 
