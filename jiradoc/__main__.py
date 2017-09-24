@@ -1,5 +1,9 @@
 import argparse
+import logging
+import os
 import sys
+
+import appdirs
 
 import config
 import parser
@@ -10,6 +14,7 @@ from parser import ParseError
 def main():
     """The program's main entry point"""
     try:
+        _configure_logging()
         parsed_args = _cli_parse()
         subtasks = _parse_file(parsed_args.file)
 
@@ -17,6 +22,16 @@ def main():
         client.insert_subtasks(subtasks)
     except (ParseError, ClientError) as e:
         sys.exit(e)
+
+
+def _configure_logging():
+    log_dir = appdirs.user_log_dir('jiradoc')
+    if not os.path.exists(log_dir):
+        os.makedirs(log_dir)
+
+    log_file = os.path.join(log_dir, 'jiradoc.log')
+    logging.basicConfig(filename=log_file, level=logging.DEBUG)
+    print("Logging to: {}".format(log_file))
 
 
 def _cli_parse():

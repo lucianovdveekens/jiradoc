@@ -1,6 +1,9 @@
 from __future__ import print_function
 
+import json
+import logging
 import re
+
 from jira import JIRA
 from jira import JIRAError
 from requests import ConnectionError
@@ -28,21 +31,21 @@ class JIRAClient(object):
 
         fields = _to_fields(subtask)
         _append_default_fields(fields, subtask.type)
-        # print(json.dumps(fields, sort_keys=True, indent=4))
 
         try:
+            logging.debug("Creating issue:\n {}".format(json.dumps(fields, sort_keys=True, indent=4)))
             issue = self.jira.create_issue(fields=fields)
         except JIRAError as e:
-            raise ClientError('Failed to insert subtask: %s,\nResponse from client: %s' % (fields, e.response.text))
+            raise ClientError("Failed to insert subtask: {},\nResponse from client: {}".format(fields, e.response.text))
 
-        print("Created sub-task '%s %s'" % (issue.key, issue.fields.summary))
+        print("Created sub-task '{} {}'".format(issue.key, issue.fields.summary))
 
     def _validate(self, subtask):
         story = self.jira.issue(subtask.parent_id)
         existing_subtasks = story.fields.subtasks
         for existing_task in existing_subtasks:
             if subtask.summary == existing_task.fields.summary:
-                raise ValidationError("%s already has a sub-task named '%s'" % (subtask.parent_id, subtask.summary))
+                raise ValidationError("{} already has a sub-task named '{}'".format(subtask.parent_id, subtask.summary))
 
 
 def _to_fields(subtask):
