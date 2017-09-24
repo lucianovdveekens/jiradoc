@@ -97,6 +97,9 @@ def p_description(p):
     p[0] = p[2]
 
 
+error_count = 0
+
+
 # Error rule for syntax errors
 def p_error(p):
     global error_count
@@ -104,10 +107,10 @@ def p_error(p):
     print("Syntax error in input: " + str(p), file=sys.stderr)
 
 
-error_count = 0
-
-
 def parse(content):
+    global error_count
+    error_count = 0
+
     parser = yacc.yacc()
     parsed_content = parser.parse(content)
     if error_count > 0:
