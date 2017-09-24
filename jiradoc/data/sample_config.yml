@@ -20,3 +20,6 @@ default_fields:
     TEST:   [{ name: "Test" }]
     FD:     [{ name: "Design" }]
     MANUAL: [{ name: "Documentation" }]
+
+# Validate a sub-task against existing ones, e.g. check for ambiguity.
+validate: true
