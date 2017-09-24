@@ -24,7 +24,10 @@ class JIRAClient(object):
 
     def insert_subtasks(self, subtasks):
         for subtask in subtasks:
-            self._insert_subtask(subtask)
+            try:
+                self._insert_subtask(subtask)
+            except ValidationError as e:
+                print(e.message)
 
     def _insert_subtask(self, subtask):
         if config.load('validate'):
@@ -86,5 +89,5 @@ class ClientError(Exception):
     """Raised when a JIRA client exception occurred"""
 
 
-class ValidationError(ClientError):
+class ValidationError(Exception):
     """Raised when a sub-task is invalid"""
