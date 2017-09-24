@@ -1,5 +1,6 @@
 from __future__ import print_function
 
+import re
 from jira import JIRA
 from jira import JIRAError
 from requests import ConnectionError
@@ -47,7 +48,7 @@ class JIRAClient(object):
 def _to_fields(subtask):
     fields = {
         "project": {
-            "key": "LP"
+            "key": re.search('\w+', subtask.parent_id).group(0)
         },
         "parent": {
             "id": subtask.parent_id

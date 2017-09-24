@@ -8,13 +8,13 @@ jira:
 
 # Extra fields, appended to parsed sub-tasks before they're inserted (optional)
 default_fields:
-  fixVersions: [{ name: "Version 1.0" }]
+  fixVersions: [{ name: "1.0" }]
   # Account (values are IDs)
   customfield_10100:
     CODE:   "1"
-    TEST:   "2"
+    TEST:   "1"
     FD:     "1"
-    MANUAL: "2"
+    MANUAL: "1"
   components:
     CODE:   [{ name: "Server" }]
     TEST:   [{ name: "Test" }]
