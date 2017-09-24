@@ -13,6 +13,8 @@ setup(
     author_email='lucianovdveekens@gmail.com',
     packages=find_packages(),
     install_requires=['ply', 'jira', 'pyyaml', 'appdirs'],
+    setup_requires=['pytest-runner'],
+    tests_require=['pytest'],
     package_data={
         'jiradoc': ['data/test.jiradoc', 'data/sample_config.yml']
     },
