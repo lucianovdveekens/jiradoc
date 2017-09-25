@@ -44,8 +44,12 @@ Created sub-task 'ABC-3 Write test specification'
 Created sub-task 'ABC-4 Test the new feature'
 Created sub-task 'ABC-5 Update the functional design'
 Created sub-task 'ABC-6 Add a section describing the new functionality'
-
 ```
+
+Now you can open JIRA to see the result:
+
+![Alt text](story.png?raw=true "Optional Title")
+
 
 ## Configuration
 
