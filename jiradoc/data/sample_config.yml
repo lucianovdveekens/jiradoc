@@ -6,10 +6,17 @@ jira:
   user: admin
   passwd: admin
 
-# Extra fields, appended to parsed sub-tasks before they're inserted (optional)
+# Default fields (optional)
+# These fields are appended to all sub-tasks before they're inserted.
+#
+# To know which fields you can add, please refer to the JIRA REST API
+# documentation: https://tinyurl.com/y962n9l9
 default_fields:
   fixVersions: [{ name: "1.0" }]
   # Account (values are IDs)
+  # You can determine the ID by opening the project settings in JIRA, going to
+  # Accounts and clicking on one of the account values. The opened URL reveals
+  # the account's ID.
   customfield_10100:
     CODE:   "1"
     TEST:   "1"
@@ -21,5 +28,5 @@ default_fields:
     FD:     [{ name: "Design" }]
     MANUAL: [{ name: "Documentation" }]
 
-# Validate a sub-task against existing ones, e.g. check for ambiguity.
+# Validate a sub-task against existing ones, e.g. check for name ambiguity.
 validate: true
